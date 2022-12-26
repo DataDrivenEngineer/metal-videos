@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F2F38052957865800BD5F01 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F38042957865800BD5F01 /* Shaders.metal */; };
 		9F36078E2868E1F000BAAADD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F36078D2868E1F000BAAADD /* QuartzCore.framework */; };
 		9F36078F2868E1FD00BAAADD /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA632AB286575D9008302B8 /* Metal.framework */; };
 		9FA632952865690E008302B8 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FA632942865690E008302B8 /* ViewController.mm */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9F2F38042957865800BD5F01 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		9F36078D2868E1F000BAAADD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9FA6328E2865690E008302B8 /* final - macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "final - macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FA632932865690E008302B8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				9FA632A828656FB6008302B8 /* RendererAdapter.h */,
 				9FA632B92866C376008302B8 /* AppDelegate.h */,
 				9FA632BA2866C3E5008302B8 /* AppDelegate.m */,
+				9F2F38042957865800BD5F01 /* Shaders.metal */,
 			);
 			path = final;
 			sourceTree = "<group>";
@@ -167,6 +170,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F2F38052957865800BD5F01 /* Shaders.metal in Sources */,
 				9FA632A728656F1E008302B8 /* RendererAdapter.mm in Sources */,
 				9FA632A528656B73008302B8 /* Renderer.cpp in Sources */,
 				9FA632952865690E008302B8 /* ViewController.mm in Sources */,
