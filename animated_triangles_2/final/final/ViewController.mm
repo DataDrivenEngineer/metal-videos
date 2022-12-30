@@ -14,8 +14,8 @@
   // Do any additional setup after loading the view.
   _view = (MTKView *)self.view;
   _view.device = MTLCreateSystemDefaultDevice();
-  _pRendererAdapter = [RendererAdapter alloc];
-  [_pRendererAdapter draw:_view.currentDrawable device:_view.device];
+  _pRendererAdapter = [[RendererAdapter alloc]initWithMTKView:_view];
+  _view.delegate = _pRendererAdapter;
 }
 
 @end
