@@ -9,8 +9,7 @@
 Renderer::Renderer(MTL::Device * const pDevice)
 : _pDevice(pDevice),
   _pCommandQueue(_pDevice->newCommandQueue()),
-  _pRenderPipelineState(nullptr, [](MTL::RenderPipelineState * const p) { p->release(); }),
-  _timer()
+  _pRenderPipelineState(nullptr, [](MTL::RenderPipelineState * const p) { p->release(); })
 {
   buildShaders();
 }
@@ -45,20 +44,40 @@ void Renderer::drawFrame(const CA::MetalDrawable *const pDrawable) {
   pRpd->colorAttachments()->object(0)->setLoadAction(MTL::LoadActionClear);
   pRpd->colorAttachments()->object(0)->setClearColor(MTL::ClearColor::Make(0.0, 1.0, 0.0, 1.0));
 
-  const std::vector<float> triangle = {
+//  const std::vector<float> triangles = {
+//	// one triangle
+//	-0.5f, 0.5f, .0f,
+//	0.5f, 0.5f, .0f,
+//	0.0f, -1.0f, .0f,
+//	// second triangle
+//	-0.5f, 0.5f, .0f,
+//	0.0f, -1.0f, .0f,
+//	-0.5f, -1.0f, .0f
+//  };
+  const std::vector<float> vertices = {
 	-0.5f, 0.5f, .0f,
 	0.5f, 0.5f, .0f,
-	0.0f, -1.0f, .0f
+	0.0f, -1.0f, .0f,
+	-0.5f, -1.0f, .0f
   };
-  const std::unique_ptr<MTL::Buffer, void(*)(MTL::Buffer * const)> pVertexBuffer(_pDevice->newBuffer(triangle.data(), sizeof(float) * 9, MTL::ResourceStorageModeShared), [](MTL::Buffer * const b) { b->release(); });
-  
-  _timer += 0.01;
+  const std::unique_ptr<MTL::Buffer, void(*)(MTL::Buffer * const)> pVertexBuffer(_pDevice->newBuffer(vertices.data(), sizeof(float) * 12, MTL::ResourceStorageModeShared), [](MTL::Buffer * const b) { b->release(); });
+  const std::vector<ushort> indices = {
+	// one triangle
+	0, 1, 2,
+	// another triangle
+	0, 2, 3
+  };
+  const std::unique_ptr<MTL::Buffer, void(*)(MTL::Buffer * const)> pIndexBuffer(_pDevice->newBuffer(indices.data(), sizeof(ushort) * 6, MTL::ResourceStorageModeShared), [](MTL::Buffer * const b) { b->release(); });
 
+  // original size = 18 * 4 = 72
+  // with indexed drawing = 12 * 4 + 6 * 2 = 60
+  
   MTL::RenderCommandEncoder * pEnc = pCmdBuf->renderCommandEncoder(pRpd);
   pEnc->setRenderPipelineState(_pRenderPipelineState.get());
   pEnc->setVertexBuffer(pVertexBuffer.get(), 0, 5);
-  pEnc->setVertexBytes(&_timer, sizeof(float), 7);
-  pEnc->drawPrimitives(MTL::PrimitiveTypeTriangle, NS::UInteger(0), NS::UInteger(3));
+  pEnc->setTriangleFillMode(MTL::TriangleFillModeLines);
+//  pEnc->drawPrimitives(MTL::PrimitiveTypeTriangle, NS::UInteger(0), NS::UInteger(6));
+  pEnc->drawIndexedPrimitives(MTL::PrimitiveTypeTriangle, indices.size(), MTL::IndexTypeUInt16, pIndexBuffer.get(), 0);
   pEnc->endEncoding();
   pCmdBuf->presentDrawable(pDrawable);
   pCmdBuf->commit();

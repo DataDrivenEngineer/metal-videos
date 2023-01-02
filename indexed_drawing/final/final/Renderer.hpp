@@ -12,7 +12,6 @@ private:
   MTL::Device * const _pDevice;
   MTL::CommandQueue * const _pCommandQueue;
   std::unique_ptr<MTL::RenderPipelineState, void(*)(MTL::RenderPipelineState *)> _pRenderPipelineState;
-  float _timer;
   
   void buildShaders();
 };
